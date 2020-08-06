@@ -1,14 +1,6 @@
 const { login } = require("../controller/user");
 const { SuccessModel, ErrorModel } = require("../model/resModel");
 
-// 获取 cookie 的过期时间
-const getCookieExpires = () => {
-  const d = new Date();
-  d.setTime(d.getTime() + 24 * 60 * 60 * 1000);
-  console.log("GMT time: ", d.toGMTString());
-  return d.toGMTString();
-};
-
 const handleUserRouter = (req, res) => {
   const method = req.method;
 
@@ -18,14 +10,11 @@ const handleUserRouter = (req, res) => {
     const result = login(username, password);
     return result.then((data) => {
       if (data.username) {
-        // 操作cookie
-        // httpOnly 只允许后端改动不许🙅前端篡改
-        res.setHeader(
-          "Set-Cookie",
-          `username=${
-            data.username
-          }; path=/; httpOnly; expires=${getCookieExpires()}`
-        );
+        // 设置 session
+        req.session.username = data.username;
+        req.session.realname = data.realname;
+
+        console.log("req.session is ", req.session);
 
         return new SuccessModel();
       } else {
