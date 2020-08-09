@@ -1,5 +1,5 @@
 const { exec } = require("../db/mysql");
-
+const xss = require("xss");
 const getList = (author, keyword) => {
   // 1=1 return true as a technique to allow sql query exec
   let sql = `select * from blogs where 1=1 `;
@@ -24,7 +24,7 @@ const getDetail = (id) => {
 
 const newBlog = (blogData = {}) => {
   // blogData 是一个博客对象，包含title content author 属性
-  const title = blogData.title;
+  const title = xss(blogData.title);
   const content = blogData.content;
   const author = blogData.author;
   const createTime = Date.now();
