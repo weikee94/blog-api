@@ -52,3 +52,28 @@ getFileContentPromise("a.json")
   .then((cData) => {
     console.log("c promise data", cData);
   });
+
+// async await method
+readFileData = async () => {
+  // 同步写法
+  const aData = await getFileContentPromise("a.json");
+  console.log("a data: ", aData);
+  const bData = await getFileContentPromise(aData.next);
+  console.log("b data: ", bData);
+  const cData = await getFileContentPromise(bData.next);
+  console.log("c data: ", cData);
+};
+
+readFileData();
+
+async function readData() {
+  const aData = await getFileContentPromise("a.json");
+  return aData;
+}
+
+async function test() {
+  const aData = await readData();
+  console.log("test: ", aData);
+}
+
+test();
