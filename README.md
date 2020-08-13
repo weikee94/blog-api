@@ -12,3 +12,7 @@ Blog API
 | update new blog       | /api/blog/update |    post | id              | body = {updateMsg: ''}          |
 | remove new blog       |  /api/blog/del   |    post | id              |                                 |
 | login                 | /api/user/login  |    post |                 | body = {name: '', password: ''} |
+
+# 总结
+
+![总结](https://github.com/weikee94/blog-api/blob/master/conclusion.png)
